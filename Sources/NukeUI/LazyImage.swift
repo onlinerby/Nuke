@@ -128,18 +128,15 @@ public struct LazyImage<Content: View>: View {
 
     public var body: some View {
         ZStack {
-            let state = makeState()
             if let makeContent = makeContent {
-                makeContent(state)
+                makeContent(viewModel)
             } else {
-                makeDefaultContent(for: state)
+                makeDefaultContent(for: viewModel)
             }
         }
         .onAppear { onAppear() }
         .onDisappear { onDisappear() }
         .onChange(of: context) {
-            viewModel.isCacheLookupNeeded = true
-            viewModel.cachedResponse = nil
             viewModel.load($0?.request)
         }
     }
@@ -153,34 +150,10 @@ public struct LazyImage<Content: View>: View {
         }
     }
 
-    private func makeState() -> LazyImageState {
-        performCacheLookupIfNeeded()
-
-        if let response = viewModel.cachedResponse {
-            return LazyImageStateCached(response: response)
-        }
-        return viewModel
-    }
-
-    /// Optimization: perform the memory cache lookup on the first `body`
-    /// calculation eliminating an unnecessary `body` call, placeholder
-    /// creation, and saving a few `objectWillChange` calls in `FetchImage`.
-    private func performCacheLookupIfNeeded() {
-        guard let request = context?.request, viewModel.isCacheLookupNeeded else {
-            return
-        }
-        viewModel.isCacheLookupNeeded = false
-        if let container = pipeline.cache[request], !container.isPreview {
-            viewModel.cachedResponse = ImageResponse(container: container, request: request, cacheType: .memory)
-        }
-    }
-
     private func onAppear() {
         viewModel.transaction = transaction
         viewModel.pipeline = pipeline
         viewModel.onCompletion = onCompletion
-
-        guard viewModel.cachedResponse == nil else { return }
         viewModel.load(context?.request)
     }
 
@@ -197,10 +170,6 @@ public struct LazyImage<Content: View>: View {
 
 private struct LazyImageContext: Equatable {
     var request: ImageRequest
-
-    init(request: ImageRequest) {
-        self.request = request
-    }
 
     static func == (lhs: LazyImageContext, rhs: LazyImageContext) -> Bool {
         let lhs = lhs.request
@@ -246,7 +215,9 @@ private struct LazyImageDemoView: View {
                     image.resizable().aspectRatio(contentMode: .fit)
                 }
             }
+#if os(iOS) || os(tvOS) || os(macOS)
             .processors(isBlured ? [ImageProcessors.GaussianBlur()] : [])
+#endif
             .id(imageViewId) // Example of how to implement retry
 
             Spacer()
@@ -262,7 +233,9 @@ private struct LazyImageDemoView: View {
                 Toggle("Apply Blur", isOn: $isBlured)
             }
             .padding()
+#if os(iOS) || os(tvOS) || os(macOS)
             .background(Material.ultraThick)
+#endif
         }
     }
 }

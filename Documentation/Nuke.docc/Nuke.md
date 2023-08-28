@@ -6,7 +6,7 @@ A powerful image loading system for Apple platforms.
 
 Nuke provides an efficient way to download and display images in your app. It's easy to learn and use. Its architecture enables many powerful features while offering virtually unlimited possibilities for customization.
 
-The framework is lean and compiles in under 2 seconds. Nuke has an automated test suite 2x the size of the codebase itself, ensuring excellent reliability. Every feature is carefully designed and optimized for performance.
+The framework is lean and compiles in under 2 seconds. Nuke has an automated test suite 2x the codebase size, ensuring excellent reliability. Every feature is carefully designed and optimized for performance.
 
 ## Sponsors 💖
 
@@ -14,7 +14,7 @@ The framework is lean and compiles in under 2 seconds. Nuke has an automated tes
 
 ## Getting Started
 
-Start learning with <doc:getting-started> and go through the rest of the articles in the documentation as you need it. Check out the [demo project](https://github.com/kean/NukeDemo) to see Nuke in action.
+Start learning with <doc:getting-started> and review the rest of the articles in the documentation as needed. Check out the [demo project](https://github.com/kean/NukeDemo) to see Nuke in action.
 
 Upgrading from the previous version? Use a [Migration Guide](https://github.com/kean/Nuke/tree/master/Documentation/Migrations).
 
@@ -39,7 +39,7 @@ The image pipeline is easy to customize and extend. Check out the following firs
 
 | Nuke | Date         | Swift | Xcode | Platforms                                     |
 |------|--------------|-------|-------|-----------------------------------------------|
-| 12.0 | Mar 4, 2023  | 5.6   | 13.3  | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0 |
+| 12.0 | Mar 4, 2023  | 5.7   | 14.1  | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0 |
 | 11.0 | Jul 20, 2022 | 5.6   | 13.3  | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0 |
 | 10.0 | June 1, 2021 | 5.3   | 12.0  | iOS 11.0, watchOS 4.0, macOS 10.13, tvOS 11.0 |
 | 9.0  | May 20, 2020 | 5.1   | 11.0  | iOS 11.0, watchOS 4.0, macOS 10.13, tvOS 11.0 |

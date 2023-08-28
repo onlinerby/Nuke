@@ -34,7 +34,7 @@ extension XCTestCase {
         return record
     }
 
-    private static var cancellablesAK = "TestExpectationPublisher.AssociatedKey"
+    private static var cancellablesAK: UInt8 = 0
 
     fileprivate var cancellables: [AnyCancellable] {
         get { (objc_getAssociatedObject(self, &XCTestCase.cancellablesAK) as? [AnyCancellable]) ?? [] }
@@ -98,7 +98,7 @@ extension XCTestCase {
         observations.append(observation)
     }
 
-    private static var observationsAK = "ImageViewController.AssociatedKey"
+    private static var observationsAK: UInt8 = 0
 
     private var observations: [NSKeyValueObservation] {
         get {
@@ -289,11 +289,11 @@ final class OperationQueueObserver {
 // MARK: - Misc
 
 func rnd() -> Int {
-    return Int(arc4random())
+    return Int.random(in: 0 ..< .max)
 }
 
 func rnd(_ uniform: Int) -> Int {
-    return Int(arc4random_uniform(UInt32(uniform)))
+    return Int.random(in: 0 ..< uniform)
 }
 
 extension DispatchQueue {
@@ -305,12 +305,5 @@ extension DispatchQueue {
                 self.after(ticks: ticks - 1, closure)
             }
         }
-    }
-}
-
-extension Array {
-    func randomItem() -> Element {
-        let index = Int(arc4random_uniform(UInt32(self.count)))
-        return self[index]
     }
 }

@@ -427,8 +427,12 @@ public final class LazyImageView: _PlatformBaseView {
         }
     }
 
-#if os(iOS) || os(tvOS)
-
+#if os(macOS)
+    private func runFadeInTransition(duration: TimeInterval) {
+        guard !imageView.isHidden else { return }
+        imageView.layer?.animateOpacity(duration: duration)
+    }
+#else
     private func runFadeInTransition(duration: TimeInterval) {
         guard !imageView.isHidden else { return }
         imageView.alpha = 0
@@ -436,14 +440,6 @@ public final class LazyImageView: _PlatformBaseView {
             self.imageView.alpha = 1
         }
     }
-
-#elseif os(macOS)
-
-    private func runFadeInTransition(duration: TimeInterval) {
-        guard !imageView.isHidden else { return }
-        imageView.layer?.animateOpacity(duration: duration)
-    }
-
 #endif
 
     // MARK: Misc

@@ -4,19 +4,19 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS) || os(watchOS)
-import UIKit
-#endif
-
 #if os(watchOS)
 import ImageIO
 import CoreGraphics
 import WatchKit.WKInterfaceDevice
 #endif
 
-#if os(macOS)
-import Cocoa
-#endif
+#if canImport(UIKit)
+ import UIKit
+ #endif
+
+ #if canImport(AppKit)
+ import AppKit
+ #endif
 
 extension PlatformImage {
     var processed: ImageProcessingExtensions {
@@ -33,7 +33,7 @@ struct ImageProcessingExtensions {
         guard let cgImage = image.cgImage else {
             return nil
         }
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if canImport(UIKit)
         let targetSize = targetSize.rotatedForOrientation(image.imageOrientation)
 #endif
         let scale = cgImage.size.getScale(targetSize: targetSize, contentMode: contentMode)
@@ -50,7 +50,7 @@ struct ImageProcessingExtensions {
         guard let cgImage = image.cgImage else {
             return nil
         }
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if canImport(UIKit)
         let targetSize = targetSize.rotatedForOrientation(image.imageOrientation)
 #endif
         let scale = cgImage.size.getScale(targetSize: targetSize, contentMode: .aspectFill)
@@ -82,8 +82,8 @@ struct ImageProcessingExtensions {
         let side = min(cgImage.width, cgImage.height)
         let targetSize = CGSize(width: side, height: side)
         let cropRect = CGRect(origin: .zero, size: targetSize).offsetBy(
-            dx: max(0, (imageSize.width - targetSize.width) / 2),
-            dy: max(0, (imageSize.height - targetSize.height) / 2)
+            dx: max(0, (imageSize.width - targetSize.width) / 2).rounded(.down),
+            dy: max(0, (imageSize.height - targetSize.height) / 2).rounded(.down)
         )
         guard let cropped = cgImage.cropping(to: cropRect) else {
             return nil
@@ -242,7 +242,7 @@ extension CGImagePropertyOrientation {
 }
 #endif
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if canImport(UIKit)
 private extension CGSize {
     func rotatedForOrientation(_ imageOrientation: CGImagePropertyOrientation) -> CGSize {
         switch imageOrientation {
@@ -322,7 +322,7 @@ enum Screen {
 #elseif os(watchOS)
     /// Returns the current screen scale.
     static let scale: CGFloat = WKInterfaceDevice.current().screenScale
-#elseif os(macOS)
+#else
     /// Always returns 1.
     static let scale: CGFloat = 1
 #endif

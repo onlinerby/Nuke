@@ -4,12 +4,12 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if canImport(UIKit)
 import UIKit
 #endif
 
-#if os(macOS)
-import Cocoa
+#if canImport(AppKit)
+import AppKit
 #endif
 
 /// A namespace with shared image processing options.
@@ -37,7 +37,7 @@ public enum ImageProcessingOptions: Sendable {
     public struct Border: Hashable, CustomStringConvertible, @unchecked Sendable {
         public let width: CGFloat
 
-#if os(iOS) || os(tvOS) || os(watchOS)
+#if canImport(UIKit)
         public let color: UIColor
 
         /// - parameters:

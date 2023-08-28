@@ -1,6 +1,50 @@
 # Nuke 12
 
-## Nuke 12.1.0
+## Nuke 12.1.6
+
+*Aug 19, 2023*
+
+- Improve `ImageCache` performance (20%)
+- Improve `NukeExtensions` performance (5%)
+- Update the code to support future visionOS releases by switching to `canImport` where possible
+
+## Nuke 12.1.5
+
+*Jul 29, 2023*
+
+- Fix https://github.com/kean/Nuke/issues/717 by moving `DataCache` metadata to a hidden file - https://github.com/kean/Nuke/pull/718
+
+## Nuke 12.1.4
+
+*Jul 22, 2023*
+
+- Upgrade to [`CryptoKit`](https://developer.apple.com/documentation/cryptokit) from `CommonCrypto` and slightly optimize how cryptographic hashes are converted to strings (used as filenames for `DataCache`)
+- Deprecate `DataCache/isCompressionEnabled`. It was initially added as a general-purpose feature, but it's not recommended to be used with most image formats.
+- `DataCache` now performs sweeps less frequently
+- Minor docs correction – https://github.com/kean/Nuke/pull/715 by @tdkn
+
+## Nuke 12.1.3
+
+*Jul 10, 2023*
+
+- Fix https://github.com/kean/Nuke/issues/709: `LazyImage` fails to perform memory cache lookup in some scenarios
+
+## Nuke 12.1.2
+
+*Jun 25, 2023*
+
+- Fix https://github.com/kean/Nuke/issues/710: build failure on watchOS in debug mode – https://github.com/kean/Nuke/pull/711 by @FieryFlames
+
+## Nuke 12.1.1
+
+*Jun 22, 2023*
+
+- Fix https://github.com/kean/Nuke/issues/693: `ImageRequest` created with an async function now executes it lazily - https://github.com/kean/Nuke/pull/708 by @khlopko
+- Fix https://github.com/kean/Nuke/issues/695: `byCroppingToSquare()` always return square image – https://github.com/kean/Nuke/pull/696 by @zzmasoud
+- Update unit tests – https://github.com/kean/Nuke/pull/701 by @woxtu 
+- Fix upcoming warnings in Xcode 15
+
+## Nuke 12.1
 
 *Mar 25, 2023*
 
@@ -9,7 +53,7 @@
 - Fix an issue with `.videoAssetKey` value missing from `ImageContainer`
 - Fix an issue with `.gif` being encoded as `.jpeg` when `.storeEncodedImages` policy is used 
 
-## Nuke 12.0.0
+## Nuke 12.0
 
 *Mar 4, 2023*
 

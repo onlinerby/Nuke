@@ -216,7 +216,7 @@ private final class ImageViewController {
 
     // MARK: - Associating Controller
 
-    static var controllerAK = "ImageViewController.AssociatedKey"
+    static var controllerAK: UInt8 = 0
 
     // Lazily create a controller for a given view and associate it with a view.
     static func controller(for view: ImageDisplayingView) -> ImageViewController {
@@ -224,7 +224,7 @@ private final class ImageViewController {
             return controller
         }
         let controller = ImageViewController(view: view)
-        objc_setAssociatedObject(view, &ImageViewController.controllerAK, controller, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(view, &ImageViewController.controllerAK, controller, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         return controller
     }
 

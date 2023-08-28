@@ -1,28 +1,42 @@
 <br/>
-
-<img src="https://user-images.githubusercontent.com/1567433/114792417-57c1d080-9d56-11eb-8035-dc07cfd7557f.png" height="205">
+<img src="https://user-images.githubusercontent.com/1567433/114792417-57c1d080-9d56-11eb-8035-dc07cfd7557f.png" height="170px">
 
 # Image Loading System
 
 <p align="left">
-<img src="https://img.shields.io/badge/platforms-iOS%2C%20macOS%2C%20watchOS%2C%20tvOS-lightgrey.svg">
-<img src="https://github.com/kean/Nuke/workflows/Nuke%20CI/badge.svg">
+<img src="https://img.shields.io/badge/platforms-iOS%2C%20macOS%2C%20watchOS%2C%20tvOS%2C%20visionOS-lightgrey.svg">
 </p>
 
-Nuke provides an efficient way to download and display images in your app. It's easy to learn and use. Its architecture enables many powerful features while offering virtually unlimited possibilities for customization.
+Load images from different sources and display them in your app using simple and flexible APIs. Take advantage of the powerful image processing capabilities and a robust caching system.
 
-The framework is lean and compiles in under 2 seconds[¹](#footnote-1). Nuke has an automated test suite 2x the size of the codebase itself, ensuring excellent reliability. Every feature is carefully designed and optimized for [performance](https://kean-docs.github.io/nuke/documentation/nuke/performance-guide).
+The framework is lean and compiles in under 2 seconds[¹](#footnote-1). It has an automated test suite 2x the codebase size, ensuring excellent reliability. Nuke is optimized for [performance](https://kean-docs.github.io/nuke/documentation/nuke/performance-guide), and its advanced architecture enables virtually unlimited possibilities for customization.
 
 > **Fast LRU memory and disk cache** · **SwiftUI** · **Smart background decompression** · **Image processing** · **Resumable downloads** · **Intelligent deduplication** · **Request prioritization** · **Prefetching** · **Rate limiting** · **Progressive JPEG, HEIF, WebP, SVG, GIF** · **Alamofire** · **Combine** · **Async/Await**
 
 ## Sponsors
 
-<a target="_blank" rel="noopener noreferrer" href="https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22#gh-light-mode-only"><img src="https://user-images.githubusercontent.com/1567433/175186173-64eb53cb-b5d6-4ed4-aaca-87dbbb0834ab.png#gh-light-mode-only" width="300px" alt="Stream Logo" style="max-width: 100%;"></a>
-<a target="_blank" rel="noopener noreferrer" href="https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22#gh-dark-mode-only"><img src="https://user-images.githubusercontent.com/1567433/175562043-0ab82adc-e3c7-4c0b-8813-a7940ff41db8.png#gh-dark-mode-only" width="244px" alt="Stream Logo" style="max-width: 100%;"></a>
+<a target="_blank" rel="noopener noreferrer" href="https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22#gh-light-mode-only"><img src="https://kean.blog/images/logos/stream-light.png#gh-light-mode-only" width="507px" alt="Stream Logo" style="max-width: 100%;"></a>
+<a target="_blank" rel="noopener noreferrer" href="https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22#gh-dark-mode-only"><img src="https://kean.blog/images/logos/stream-dark.png#gh-dark-mode-only" width="507px" alt="Stream Logo" style="max-width: 100%;"></a>
 
 Nuke is proudly sponsored by [Stream](https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22), the leading provider in enterprise grade Feed & Chat APIs.
 
 > [Support](https://github.com/sponsors/kean) Nuke on GitHub Sponsors.
+
+### Additional Sponsors
+
+<table>
+  <tr>
+    <td valign="center">
+        <a href="https://proxyman.io"><img src="https://kean.blog/images/logos/proxyman.png" height="40px" alt="Proxyman Logo"></a>
+    </td>
+    <td valign="center">
+        <a href="https://www.namiml.com#gh-light-mode-only"><img src="https://kean.blog/images/logos/nami-light.png#gh-light-mode-only" height="40px" alt="Nami Logo"></a><a href="https://www.namiml.com#gh-dark-mode-only"><img src="https://kean.blog/images/logos/nami-dark.png#gh-dark-mode-only" height="40px" alt="Nami Logo"></a>
+    </td>
+    <td valign="center">
+        <a href="https://sentry.io#gh-light-mode-only"><img src="https://kean.blog/images/logos/sentry-light.png#gh-light-mode-only" height="40px" alt="Nami Logo"></a><a href="https://sentry.io#gh-dark-mode-only"><img src="https://kean.blog/images/logos/sentry-dark.png#gh-dark-mode-only" height="40px" alt="Nami Logo"></a>
+    </td>
+  </tr>
+</table>
 
 ## Installation
 
@@ -56,7 +70,7 @@ The image pipeline is easy to customize and extend. Check out the following firs
 
 | Nuke       | Date         | Swift       | Xcode      | Platforms                                     |
 |------------|--------------|-------------|------------|-----------------------------------------------|
-| Nuke 12.0  | Mar 4, 2023  | Swift 5.6   | Xcode 13.3 | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0 |
+| Nuke 12.0  | Mar 4, 2023  | Swift 5.7   | Xcode 14.1 | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0 |
 | Nuke 11.0  | Jul 20, 2022 | Swift 5.6   | Xcode 13.3 | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0 |
 | Nuke 10.0  | Jun 1, 2021  | Swift 5.3   | Xcode 12.0 | iOS 11.0, watchOS 4.0, macOS 10.13, tvOS 11.0 |
 
