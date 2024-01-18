@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2023 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2024 Alexander Grebenyuk (github.com/kean).
 
 import XCTest
 import Foundation
@@ -129,7 +129,7 @@ struct TestExpectationOperationQueue {
         return observer
     }
 
-    /// Fulfills an expectation as soon as a queue finished exeucting `n`
+    /// Fulfills an expectation as soon as a queue finished executing `n`
     /// operations (doesn't matter whether they were cancelled or executed).
     ///
     /// Automatically resumes a queue as soon as `n` operations are enqueued.

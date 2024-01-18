@@ -1,13 +1,13 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2023 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2024 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 
 /// Wrapper for tasks created by `loadImage` calls.
 ///
 /// Performs all the quick cache lookups and also manages image processing.
-/// The coalesing for image processing is implemented on demand (extends the
+/// The coalescing for image processing is implemented on demand (extends the
 /// scenarios in which coalescing can kick in).
 final class TaskLoadImage: ImagePipelineTask<ImageResponse> {
     override func start() {

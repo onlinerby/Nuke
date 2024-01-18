@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2023 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2024 Alexander Grebenyuk (github.com/kean).
 
 @preconcurrency import AVKit
 import Foundation
@@ -137,7 +137,11 @@ public final class VideoPlayerView: _PlatformBaseView {
         let playerItem = AVPlayerItem(asset: asset)
         let player = AVQueuePlayer(playerItem: playerItem)
         player.isMuted = true
-        player.preventsDisplaySleepDuringVideoPlayback = false
+#if os(visionOS)
+            player.preventsAutomaticBackgroundingDuringVideoPlayback = false
+#else
+            player.preventsDisplaySleepDuringVideoPlayback = false
+#endif
         player.actionAtItemEnd = isLooping ? .none : .pause
         self.player = player
 

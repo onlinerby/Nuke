@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2023 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2024 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 import Combine
@@ -279,7 +279,7 @@ public struct ImageRequest: CustomStringConvertible, Sendable, ExpressibleByStri
         /// Returns a raw value.
         public let rawValue: UInt16
 
-        /// Initialializes options with a given raw values.
+        /// Initializes options with a given raw values.
         public init(rawValue: UInt16) {
             self.rawValue = rawValue
         }
