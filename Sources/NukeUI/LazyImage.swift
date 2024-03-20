@@ -134,7 +134,7 @@ public struct LazyImage<Content: View>: View {
 
     public var body: some View {
         ZStack {
-            if let makeContent = makeContent {
+            if let makeContent {
                 makeContent(viewModel)
             } else {
                 makeDefaultContent(for: viewModel)
@@ -222,7 +222,7 @@ private struct LazyImageDemoView: View {
                     image.resizable().aspectRatio(contentMode: .fit)
                 }
             }
-#if os(iOS) || os(tvOS) || os(macOS)
+#if os(iOS) || os(tvOS) || os(macOS) || os(visionOS)
             .processors(isBlured ? [ImageProcessors.GaussianBlur()] : [])
 #endif
             .id(imageViewId) // Example of how to implement retry
@@ -240,7 +240,7 @@ private struct LazyImageDemoView: View {
                 Toggle("Apply Blur", isOn: $isBlured)
             }
             .padding()
-#if os(iOS) || os(tvOS) || os(macOS)
+#if os(iOS) || os(tvOS) || os(macOS) || os(visionOS)
             .background(Material.ultraThick)
 #endif
         }

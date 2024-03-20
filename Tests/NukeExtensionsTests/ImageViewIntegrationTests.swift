@@ -6,7 +6,7 @@ import XCTest
 @testable import Nuke
 @testable import NukeExtensions
 
-#if os(iOS) || os(tvOS) || os(macOS)
+#if os(iOS) || os(tvOS) || os(macOS) || os(visionOS)
 
 @MainActor
 class ImageViewIntegrationTests: XCTestCase {
@@ -70,7 +70,7 @@ class ImageViewIntegrationTests: XCTestCase {
     func testLoadImageWithInvalidURLString() {
         // WHEN
         let expectation = self.expectation(description: "Image loaded")
-        NukeExtensions.loadImage(with: URL(string: "http://example.com/invalid url"), into: imageView) { result in
+        NukeExtensions.loadImage(with: URL(string: ""), into: imageView) { result in
             XCTAssertEqual(result.error, .imageRequestMissing)
             expectation.fulfill()
         }
@@ -114,7 +114,7 @@ class ImageViewIntegrationTests: XCTestCase {
     
     // MARK: - Data Passed
     
-#if os(iOS)
+#if os(iOS) || os(visionOS)
     private final class MockView: UIView, Nuke_ImageDisplaying {
         func nuke_display(image: PlatformImage?, data: Data?) {
             recordedData.append(data)

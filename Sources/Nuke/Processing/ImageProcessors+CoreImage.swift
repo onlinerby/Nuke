@@ -2,7 +2,7 @@
 //
 // Copyright (c) 2015-2024 Alexander Grebenyuk (github.com/kean).
 
-#if os(iOS) || os(tvOS) || os(macOS)
+#if os(iOS) || os(tvOS) || os(macOS) || os(visionOS)
 
 import Foundation
 import CoreImage
@@ -49,7 +49,7 @@ extension ImageProcessors {
         }
 
         public func process(_ container: ImageContainer, context: ImageProcessingContext) throws -> ImageContainer {
-            try container.map(_process(_:))
+            try container.map(_process)
         }
 
         private func _process(_ image: PlatformImage) throws -> PlatformImage {

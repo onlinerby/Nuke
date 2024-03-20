@@ -15,15 +15,6 @@ The framework is lean and compiles in under 2 seconds[¹](#footnote-1). It has a
 
 ## Sponsors
 
-<a target="_blank" rel="noopener noreferrer" href="https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22#gh-light-mode-only"><img src="https://kean.blog/images/logos/stream-light.png#gh-light-mode-only" width="507px" alt="Stream Logo" style="max-width: 100%;"></a>
-<a target="_blank" rel="noopener noreferrer" href="https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22#gh-dark-mode-only"><img src="https://kean.blog/images/logos/stream-dark.png#gh-dark-mode-only" width="507px" alt="Stream Logo" style="max-width: 100%;"></a>
-
-Nuke is proudly sponsored by [Stream](https://getstream.io/chat/sdk/swiftui/?utm_source=Nuke&utm_medium=Github_Repo_Content_Ad&utm_content=Developer&utm_campaign=Nuke_July2022_SwiftUIChat_klmh22), the leading provider in enterprise grade Feed & Chat APIs.
-
-> [Support](https://github.com/sponsors/kean) Nuke on GitHub Sponsors.
-
-### Additional Sponsors
-
 <table>
   <tr>
     <td valign="center">
@@ -32,11 +23,10 @@ Nuke is proudly sponsored by [Stream](https://getstream.io/chat/sdk/swiftui/?utm
     <td valign="center">
         <a href="https://www.namiml.com#gh-light-mode-only"><img src="https://kean.blog/images/logos/nami-light.png#gh-light-mode-only" height="40px" alt="Nami Logo"></a><a href="https://www.namiml.com#gh-dark-mode-only"><img src="https://kean.blog/images/logos/nami-dark.png#gh-dark-mode-only" height="40px" alt="Nami Logo"></a>
     </td>
-    <td valign="center">
-        <a href="https://sentry.io#gh-light-mode-only"><img src="https://kean.blog/images/logos/sentry-light.png#gh-light-mode-only" height="40px" alt="Nami Logo"></a><a href="https://sentry.io#gh-dark-mode-only"><img src="https://kean.blog/images/logos/sentry-dark.png#gh-dark-mode-only" height="40px" alt="Nami Logo"></a>
-    </td>
   </tr>
 </table>
+
+> [Support](https://github.com/sponsors/kean) Nuke on GitHub Sponsors.
 
 ## Installation
 
