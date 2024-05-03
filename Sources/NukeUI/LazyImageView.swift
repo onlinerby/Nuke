@@ -53,6 +53,10 @@ public final class LazyImageView: _PlatformBaseView {
         }
     }
 
+    /// Displays the placeholder image or view in the case of a failure.
+    /// `false` by default.
+    public var showPlaceholderOnFailure = false
+
     private var placeholderViewConstraints: [NSLayoutConstraint] = []
 
     // MARK: Failure View
@@ -323,7 +327,11 @@ public final class LazyImageView: _PlatformBaseView {
         case let .success(response):
             display(response.container, isFromMemory: isSync)
         case .failure:
-            setFailureViewHidden(false)
+            if showPlaceholderOnFailure {
+                setPlaceholderViewHidden(false)
+            } else {
+                setFailureViewHidden(false)
+            }
         }
 
         imageTask = nil

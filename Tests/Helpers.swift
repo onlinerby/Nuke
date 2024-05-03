@@ -33,7 +33,7 @@ enum Test {
         return try! ImageDecoders.Default().decode(data)
     }
 
-    static let url = URL(string: "http://test.com")!
+    static let url = URL(string: "http://test.com/example.jpeg")!
 
     static let data: Data = Test.data(name: "fixture", extension: "jpeg")
 
@@ -82,7 +82,7 @@ extension ImageDecodingContext {
     }
 
     static func mock(data: Data) -> ImageDecodingContext {
-        ImageDecodingContext(request: Test.request, data: data, isCompleted: true, urlResponse: nil, cacheType: nil)
+        ImageDecodingContext(request: Test.request, data: data)
     }
 }
 
