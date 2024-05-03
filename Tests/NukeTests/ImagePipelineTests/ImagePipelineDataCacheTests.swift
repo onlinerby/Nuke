@@ -46,31 +46,80 @@ class ImagePipelineDataCachingTests: XCTestCase {
         }
     }
     
-    func testGeneratedThumbnailDataIsStoredIncache() {
-        // When
+    func testThumbnailOptionsDataCacheStoresOriginalDataByDefault() throws {
+        // GIVEN
+        pipeline = pipeline.reconfigured {
+            $0.dataCachePolicy = .storeOriginalData
+            $0.imageCache = MockImageCache()
+            $0.debugIsSyncImageEncoding = true
+        }
+
+        // WHEN
         let request = ImageRequest(url: Test.url, userInfo: [.thumbnailKey: ImageRequest.ThumbnailOptions(size: CGSize(width: 400, height: 400), unit: .pixels, contentMode: .aspectFit)])
         expect(pipeline).toLoadImage(with: request)
-        
-        // Then
-        wait { _ in
-            XCTAssertFalse(self.dataCache.store.isEmpty)
-            
-            XCTAssertNotNil(self.pipeline.cache.cachedData(for: request))
-            
-            guard let container = self.pipeline.cache.cachedImage(for: request, caches: [.disk]) else {
-                return XCTFail()
-            }
-            XCTAssertEqual(container.image.sizeInPixels, CGSize(width: 400, height: 300))
-            
-            XCTAssertNil(self.pipeline.cache.cachedData(for: ImageRequest(url: Test.url)))
+
+        // THEN
+        wait()
+
+        do { // Check memory cache
+            // Image does not exists for the original image
+            XCTAssertNil(pipeline.cache.cachedImage(for: ImageRequest(url: Test.url), caches: [.memory]))
+
+            // Image exists for thumbnail
+            let thumbnail = try XCTUnwrap(pipeline.cache.cachedImage(for: request, caches: [.memory]))
+            XCTAssertEqual(thumbnail.image.sizeInPixels, CGSize(width: 400, height: 300))
+        }
+
+        do { // Check disk cache
+            // Data exists for the original image
+            let original = try XCTUnwrap(pipeline.cache.cachedImage(for: ImageRequest(url: Test.url), caches: [.disk]))
+            XCTAssertEqual(original.image.sizeInPixels, CGSize(width: 640, height: 480))
+
+            // Data does not exist for thumbnail
+            XCTAssertNil(pipeline.cache.cachedData(for: request))
         }
     }
-    
+
+    func testThumbnailOptionsDataCacheStoresOriginalDataWithStoreAllPolicy() throws {
+        // GIVEN
+        pipeline = pipeline.reconfigured {
+            $0.dataCachePolicy = .storeAll
+            $0.imageCache = MockImageCache()
+            $0.debugIsSyncImageEncoding = true
+        }
+
+        // WHEN
+        let request = ImageRequest(url: Test.url, userInfo: [.thumbnailKey: ImageRequest.ThumbnailOptions(size: CGSize(width: 400, height: 400), unit: .pixels, contentMode: .aspectFit)])
+        expect(pipeline).toLoadImage(with: request)
+
+        // THEN
+        wait()
+
+        do { // Check memory cache
+            // Image does not exists for the original image
+            XCTAssertNil(pipeline.cache.cachedImage(for: ImageRequest(url: Test.url), caches: [.memory]))
+
+            // Image exists for thumbnail
+            let thumbnail = try XCTUnwrap(pipeline.cache.cachedImage(for: request, caches: [.memory]))
+            XCTAssertEqual(thumbnail.image.sizeInPixels, CGSize(width: 400, height: 300))
+        }
+
+        do { // Check disk cache
+            // Data exists for the original image
+            let original = try XCTUnwrap(pipeline.cache.cachedImage(for: ImageRequest(url: Test.url), caches: [.disk]))
+            XCTAssertEqual(original.image.sizeInPixels, CGSize(width: 640, height: 480))
+
+            // Data exists for thumbnail
+            let thumbnail = try XCTUnwrap(pipeline.cache.cachedImage(for: request, caches: [.disk]))
+            XCTAssertEqual(thumbnail.image.sizeInPixels, CGSize(width: 400, height: 300))
+        }
+    }
+
     // MARK: - Updating Priority
     
     func testPriorityUpdated() {
         // Given
-        let queue = pipeline.configuration.dataCachingQueue
+        let queue = pipeline.configuration.dataLoadingQueue
         queue.isSuspended = true
         
         let request = Test.request
@@ -95,7 +144,7 @@ class ImagePipelineDataCachingTests: XCTestCase {
     
     func testOperationCancelled() {
         // Given
-        let queue = pipeline.configuration.dataCachingQueue
+        let queue = pipeline.configuration.dataLoadingQueue
         queue.isSuspended = true
         let observer = self.expect(queue).toEnqueueOperationsWithCount(1)
         let task = pipeline.loadImage(with: Test.request) { _ in }
@@ -575,8 +624,8 @@ class ImagePipelineDataCachePolicyTests: XCTestCase {
         XCTAssertEqual(dataCache.store.count, 2)
     }
     
-    // MARK: Local Storage
-    
+    // MARK: Local Resources
+
     func testImagesFromLocalStorageNotCached() {
         // GIVEN
         pipeline = pipeline.reconfigured {
@@ -584,8 +633,8 @@ class ImagePipelineDataCachePolicyTests: XCTestCase {
         }
         
         // GIVEN request without a processor
-        let request = ImageRequest(url: URL(string: "file://example/image.jpeg"))
-        
+        let request = ImageRequest(url: Test.url(forResource: "fixture", extension: "jpeg"))
+
         // WHEN
         expect(pipeline).toLoadImage(with: request)
         wait()
@@ -603,8 +652,8 @@ class ImagePipelineDataCachePolicyTests: XCTestCase {
         }
         
         // GIVEN request with a processor
-        let request = ImageRequest(url: URL(string: "file://example/image.jpeg") ,processors: [.resize(width: 100)])
-        
+        let request = ImageRequest(url: Test.url(forResource: "fixture", extension: "jpeg") ,processors: [.resize(width: 100)])
+
         // WHEN
         expect(pipeline).toLoadImage(with: request)
         wait()
@@ -622,8 +671,8 @@ class ImagePipelineDataCachePolicyTests: XCTestCase {
         }
         
         // GIVEN request without a processor
-        let request = ImageRequest(url: URL(string: "data://example/image.jpeg"))
-        
+        let request = ImageRequest(url: Test.url(forResource: "fixture", extension: "jpeg"))
+
         // WHEN
         expect(pipeline).toLoadImage(with: request)
         wait()
@@ -633,7 +682,28 @@ class ImagePipelineDataCachePolicyTests: XCTestCase {
         XCTAssertEqual(dataCache.writeCount, 0)
         XCTAssertEqual(dataCache.store.count, 0)
     }
-    
+
+    func testImagesFromData() {
+        // GIVEN
+        pipeline = pipeline.reconfigured {
+            $0.dataCachePolicy = .automatic
+        }
+
+        // GIVEN request without a processor
+        let data = Test.data(name: "fixture", extension: "jpeg")
+        let url = URL(string: "data:image/jpeg;base64,\(data.base64EncodedString())")
+        let request = ImageRequest(url: url)
+
+        // WHEN
+        expect(pipeline).toLoadImage(with: request)
+        wait()
+
+        // THEN original image data is stored in disk cache
+        XCTAssertEqual(encoder.encodeCount, 0)
+        XCTAssertEqual(dataCache.writeCount, 0)
+        XCTAssertEqual(dataCache.store.count, 0)
+    }
+
     // MARK: Misc
     
     func testSetCustomImageEncoder() {
@@ -667,5 +737,20 @@ class ImagePipelineDataCachePolicyTests: XCTestCase {
             XCTAssertTrue(isCustomEncoderCalled)
             XCTAssertNil(self.dataCache.cachedData(for: Test.url.absoluteString + "1"), "Expected processed image data to not be stored")
         }
+    }
+
+    // MARK: Integration with Thumbnail Feature
+
+    func testOriginalDataStoredWhenThumbnailRequested() {
+        // GIVEN
+        let options = ImageRequest.ThumbnailOptions(maxPixelSize: 400)
+        let request = ImageRequest(url: Test.url, userInfo: [.thumbnailKey: options])
+
+        // WHEN
+        expect(pipeline).toLoadImage(with: request)
+        wait()
+
+        // THEN
+        XCTAssertTrue(dataCache.containsData(for: "http://test.com/example.jpeg"))
     }
 }

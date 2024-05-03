@@ -1,14 +1,38 @@
 # Nuke 12
 
+## Nuke 12.6
+
+*Apr 23, 2024*
+
+- Fix an issue with an optimization that is supposed to skip decompression if one or more processors are applied
+- Fix a `[Decompressor] Error -17102 decompressing image -- possibly corrupt` console error message when using `ImagePipeline.Configuration.isUsingPrepareForDisplay` (disabled by default). The pipeline will now skip decompression for `.png`.  
+- Fix https://github.com/kean/Nuke/issues/705 with integration between thumbnail options (link) and original data caching: the original data is now stored without a thumbnail key
+- Fix an issue where `.storeAll` and `.automatic` cache policies would not store the thumbnail data
+- Fix https://github.com/kean/Nuke/issues/746 an issue with `ImageRequest.UserInfoKey.scaleKey` not interacting correctly with coalescing 
+- Fix https://github.com/kean/Nuke/issues/763 SwiftUI Warning: Accessing StateObject's object without being installed on a View when using `onStart`
+- Fix https://github.com/kean/Nuke/issues/758 by adding support for initializing `ImageProcessors.CoreImageFilter` with `CIFilter` instances
+- Add support for disk cache lookup for intermediate processed images (as opposed to only final and original as before)
+- Add an optimization that loads local resources with `file` and `data` schemes quickly without using `DataLoader` and `URLSession`. If you rely on the existing behavior, this optimization can be turned off using the `isLocalResourcesSupportEnabled` configuration option. https://github.com/kean/Nuke/pull/779
+- Deprecate `ImagePipeline.Configuration.dataCachingQueue` and perform data cache lookups on the pipeline's queue, reducing the amount of context switching
+- Update the infrastructure for coalescing image-processing tasks to use the task-dependency used for other operations
+
+## Nuke 12.5
+
+*Mar 23, 2024*
+
+- Fix Xcode 15.3 concurrency warnings when using `Screen.scale` by @jszumski in https://github.com/kean/Nuke/pull/766
+- Add `showPlaceholderOnFailure` parameter to show placeholder in case of image loading failure by @mlight3 in https://github.com/kean/Nuke/pull/764
+- Fix image loading test on iOS 17 by @woxtu in https://github.com/kean/Nuke/pull/768
+- Update thumbnail key value for `ImageRequest`` by @woxtu in https://github.com/kean/Nuke/pull/769
+- Remove trailing whitespaces by @woxtu in https://github.com/kean/Nuke/pull/767
+- Apply `if let` shorthand syntax by @mlight3 in https://github.com/kean/Nuke/pull/762
+
 ## Nuke 12.4
 
 *Feb 10, 2024*
 
-## What's Changed
-* Enable visionOS support for all APIs by @zachwaugh in https://github.com/kean/Nuke/pull/752
-* Update documentation by @tkersey in https://github.com/kean/Nuke/pull/747
-
-**Full Changelog**: https://github.com/kean/Nuke/compare/12.3.0...12.4.0
+- Enable visionOS support for all APIs by @zachwaugh in https://github.com/kean/Nuke/pull/752
+- Update documentation by @tkersey in https://github.com/kean/Nuke/pull/747
 
 ## Nuke 12.3
 
