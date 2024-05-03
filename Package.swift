@@ -10,11 +10,11 @@ let package = Package(
         .watchOS(.v6)
     ],
     products: [
-        .library(name: "OnlinerNuke", targets: ["Nuke"]),
-        .library(name: "OnlinerNukeExtensions", targets: ["NukeExtensions"])
+        .library(name: "OnlinerNuke", targets: ["OnlinerNuke"]),
+        .library(name: "OnlinerNukeExtensions", targets: ["OnlinerNukeExtensions"])
     ],
     targets: [
-        .target(name: "Nuke"),
-        .target(name: "NukeExtensions", dependencies: ["Nuke"])
+        .target(name: "OnlinerNuke"),
+        .target(name: "OnlinerNukeExtensions", dependencies: ["OnlinerNuke"])
     ]
 )
