@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Nuke",
+    name: "OnlinerNuke",
     platforms: [
         .iOS(.v13),
         .tvOS(.v13),
